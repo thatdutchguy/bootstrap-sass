@@ -5,7 +5,7 @@ module Bootstrap
   def self.load!
     if compass? && asset_pipeline?
       register_compass_extension
-      register_rails_engine
+      register_rails_engine if rails?
     elsif compass?
       # Only require compass extension if a standalone project
       require 'bootstrap-sass/compass_functions'
@@ -28,6 +28,10 @@ module Bootstrap
 
   def self.compass?
     defined?(::Compass)
+  end
+
+  def self.rails?
+    defined?(::Rails)
   end
 
   def self.register_compass_extension
