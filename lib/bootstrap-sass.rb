@@ -11,12 +11,18 @@ module Bootstrap
       require 'bootstrap-sass/compass_functions'
       register_compass_extension
     elsif asset_pipeline?
-      require 'sass-rails' # See: https://github.com/thomas-mcdonald/bootstrap-sass/pull/4
+      require 'bootstrap-sass/sass_functions'
+    end
+
+    if rails?
+      require 'sass-rails'
       register_rails_engine
-      require 'bootstrap-sass/rails_functions'
-    else
+    end
+
+    if !(rails? || compass?)
       raise Bootstrap::FrameworkNotFound, "bootstrap-sass requires either Rails > 3.1 or Compass, neither of which are loaded"
     end
+
     stylesheets = File.expand_path(File.join("..", 'vendor', 'assets', 'stylesheets'))
     ::Sass.load_paths << stylesheets
   end
